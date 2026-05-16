@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সাহারা মিক্সড ফ্রুট আঁচার - বিজ্ঞাপন</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: #1a0a00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .ad-container {
+    width: 480px;
+    height: 854px;
+    background: linear-gradient(160deg, #3d1a00 0%, #7a2e00 40%, #c05000 70%, #e07000 100%);
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 80px rgba(255, 140, 0, 0.5);
+  }
+
+  /* Background texture */
+  .bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 20%, rgba(255,200,50,0.08) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 80%, rgba(255,100,0,0.1) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(900px) scale(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-50px) scale(1.2); opacity: 0; }
+  }
+
+  /* Shine sweep */
+  .shine {
+    position: absolute;
+    top: -100%;
+    left: -60%;
+    width: 40%;
+    height: 300%;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+    animation: shineSweep 4s ease-in-out infinite;
+    z-index: 10;
+  }
+
+  @keyframes shineSweep {
+    0% { left: -60%; }
+    60% { left: 160%; }
+    100% { left: 160%; }
+  }
+
+  /* ---- SCENE LAYERS ---- */
+  .scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+  }
+
+  /* Top badge */
+  .top-badge {
+    margin-top: 38px;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 6px 22px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 18px rgba(238,9,121,0.45);
+    opacity: 0;
+    animation: fadeDown 0.6s 0.3s ease forwards;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Brand name */
+  .brand {
+    margin-top: 16px;
+    font-size: 42px;
+    font-weight: 700;
+    color: #ffe082;
+    text-shadow: 0 0 30px rgba(255,200,0,0.8), 0 4px 8px rgba(0,0,0,0.5);
+    letter-spacing: 3px;
+    opacity: 0;
+    animation: fadeDown 0.7s 0.5s ease forwards;
+  }
+
+  /* Product name */
+  .product-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255,220,130,0.9);
+    letter-spacing: 1.5px;
+    opacity: 0;
+    animation: fadeDown 0.7s 0.7s ease forwards;
+    margin-top: 2px;
+  }
+
+  /* Jar illustration */
+  .jar-wrap {
+    margin-top: 22px;
+    position: relative;
+    width: 240px;
+    height: 270px;
+    opacity: 0;
+    animation: jarReveal 1s 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes jarReveal {
+    from { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+    to { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  .jar-wrap:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 24px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.45) 0%, transparent 75%);
+    border-radius: 50%;
+  }
+
+  /* Floating fruits around jar */
+  .fruit {
+    position: absolute;
+    font-size: 32px;
+    opacity: 0;
+    animation: fruitFloat ease-in-out infinite;
+  }
+
+  @keyframes fruitFloat {
+    0%   { opacity: 0; transform: translateY(10px) rotate(0deg); }
+    20%  { opacity: 1; }
+    50%  { transform: translateY(-14px) rotate(10deg); }
+    80%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(10px) rotate(0deg); }
+  }
+
+  /* Tagline */
+  .tagline {
+    margin-top: 28px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    line-height: 1.3;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    opacity: 0;
+    animation: fadeUp 0.8s 1.7s ease forwards;
+    padding: 0 30px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tagline span {
+    color: #ffe082;
+    display: inline-block;
+    animation: pulse 2s 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* Feature pills */
+  .features {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s 2s ease forwards;
+  }
+
+  .pill {
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,220,100,0.4);
+    color: #ffe082;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 18px;
+    border-radius: 30px;
+    backdrop-filter: blur(6px);
+    letter-spacing: 0.5px;
+  }
+
+  /* Divider */
+  .divider {
+    width: 70%;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(255,220,100,0.6), transparent);
+    margin: 20px auto 0;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.2s ease forwards;
+  }
+
+  /* Description */
+  .desc {
+    margin-top: 16px;
+    font-size: 15px;
+    color: rgba(255,230,180,0.85);
+    text-align: center;
+    line-height: 1.7;
+    padding: 0 34px;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.4s ease forwards;
+  }
+
+  /* CTA */
+  .cta-wrap {
+    margin-top: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.7s ease forwards;
+  }
+
+  .cta {
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 15px 50px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 30px rgba(238, 9, 121, 0.5), 0 0 0 0 rgba(238,9,121,0.4);
+    animation: ctaPulse 2s 3.5s ease-in-out infinite;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 8px 30px rgba(238,9,121,0.5), 0 0 0 0 rgba(238,9,121,0.4); }
+    50% { box-shadow: 0 8px 30px rgba(238,9,121,0.5), 0 0 0 12px rgba(238,9,121,0); }
+  }
+
+  /* Bottom footer */
+  .footer {
+    position: absolute;
+    bottom: 24px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,220,130,0.55);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeUp 0.8s 3s ease forwards;
+  }
+
+  /* Stars decoration */
+  .star {
+    position: absolute;
+    color: rgba(255,220,80,0.7);
+    font-size: 14px;
+    animation: twinkle ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Jar SVG styling */
+  .jar-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 30px rgba(255,120,0,0.5)) drop-shadow(0 0 15px rgba(255,200,0,0.3));
+  }
+</style>
+</head>
+<body>
+
+<div class="ad-container">
+  <div class="bg-pattern"></div>
+  <div class="shine"></div>
+
+  <!-- Stars -->
+  <div class="star" style="top:60px; left:30px; animation-duration:2.3s; animation-delay:0.5s;">★</div>
+  <div class="star" style="top:120px; right:25px; animation-duration:1.8s; animation-delay:1.2s; font-size:10px;">★</div>
+  <div class="star" style="top:300px; left:20px; animation-duration:2.7s; animation-delay:0.2s; font-size:12px;">✦</div>
+  <div class="star" style="top:340px; right:18px; animation-duration:2s; animation-delay:1.7s;">✦</div>
+  <div class="star" style="top:500px; left:26px; animation-duration:3s; animation-delay:0.9s; font-size:10px;">★</div>
+  <div class="star" style="top:540px; right:30px; animation-duration:2.4s; animation-delay:0.4s; font-size:11px;">★</div>
+
+  <!-- Floating particles -->
+  <div class="particle" style="width:6px;height:6px;background:#ffd700;left:15%;animation-duration:6s;animation-delay:0s;"></div>
+  <div class="particle" style="width:4px;height:4px;background:#ff8c00;left:30%;animation-duration:7s;animation-delay:1s;"></div>
+  <div class="particle" style="width:5px;height:5px;background:#ffcc00;left:55%;animation-duration:5.5s;animation-delay:2s;"></div>
+  <div class="particle" style="width:7px;height:7px;background:#ff6600;left:75%;animation-duration:8s;animation-delay:0.5s;"></div>
+  <div class="particle" style="width:4px;height:4px;background:#ffe082;left:88%;animation-duration:6.5s;animation-delay:3s;"></div>
+  <div class="particle" style="width:5px;height:5px;background:#ffa500;left:42%;animation-duration:7.5s;animation-delay:1.5s;"></div>
+
+  <div class="scene">
+    <div class="top-badge">নতুন স্বাদ &bull; নতুন অনুভূতি</div>
+
+    <div class="brand">সাহারা</div>
+    <div class="product-name">মিক্সড ফ্রুট আঁচার</div>
+
+    <!-- Jar Illustration -->
+    <div class="jar-wrap">
+      <!-- Floating fruits -->
+      <div class="fruit" style="top:-10px; left:-30px; animation-duration:4s; animation-delay:1.5s;">🫐</div>
+      <div class="fruit" style="top:10px; right:-35px; animation-duration:3.5s; animation-delay:2s;">🌶️</div>
+      <div class="fruit" style="top:80px; left:-40px; animation-duration:5s; animation-delay:0.5s;">🍋</div>
+      <div class="fruit" style="top:90px; right:-40px; animation-duration:4.5s; animation-delay:1s;">🫒</div>
+      <div class="fruit" style="top:170px; left:-30px; animation-duration:3.8s; animation-delay:2.5s;">🌿</div>
+      <div class="fruit" style="top:180px; right:-28px; animation-duration:4.2s; animation-delay:1.8s;">🍊</div>
+
+      <!-- Glass Jar SVG -->
+      <svg class="jar-svg" viewBox="0 0 240 270" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="jarBody" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#8B4500;stop-opacity:0.9"/>
+            <stop offset="20%" style="stop-color:#D2691E;stop-opacity:0.85"/>
+            <stop offset="50%" style="stop-color:#F4A040;stop-opacity:0.7"/>
+            <stop offset="75%" style="stop-color:#CD6010;stop-opacity:0.85"/>
+            <stop offset="100%" style="stop-color:#6B3200;stop-opacity:0.9"/>
+          </linearGradient>
+          <linearGradient id="fillColor" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8B2200"/>
+            <stop offset="30%" style="stop-color:#C0392B"/>
+            <stop offset="60%" style="stop-color:#E74C2B"/>
+            <stop offset="100%" style="stop-color:#A93226"/>
+          </linearGradient>
+          <linearGradient id="lidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#FFD700"/>
+            <stop offset="50%" style="stop-color:#FFA500"/>
+            <stop offset="100%" style="stop-color:#CC6600"/>
+          </linearGradient>
+          <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:rgba(255,255,255,0)"/>
+            <stop offset="30%" style="stop-color:rgba(255,255,255,0.25)"/>
+            <stop offset="50%" style="stop-color:rgba(255,255,255,0.5)"/>
+            <stop offset="70%" style="stop-color:rgba(255,255,255,0.1)"/>
+            <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+          </linearGradient>
+          <radialGradient id="labelGrad" cx="50%" cy="40%">
+            <stop offset="0%" style="stop-color:#FFF9C4"/>
+            <stop offset="100%" style="stop-color:#FFE082"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Jar neck -->
+        <path d="M80,55 Q80,45 88,42 L152,42 Q160,45 160,55 L160,75 Q160,80 152,80 L88,80 Q80,80 80,75 Z" fill="url(#jarBody)" />
+
+        <!-- Jar body -->
+        <path d="M68,80 Q60,85 58,100 L50,220 Q48,240 60,250 L180,250 Q192,240 190,220 L182,100 Q180,85 172,80 Z" fill="url(#jarBody)" />
+
+        <!-- Fill content (pickle) -->
+        <clipPath id="jarClip">
+          <path d="M68,80 Q60,85 58,100 L50,220 Q48,240 60,250 L180,250 Q192,240 190,220 L182,100 Q180,85 172,80 Z"/>
+        </clipPath>
+        <g clip-path="url(#jarClip)">
+          <rect x="50" y="110" width="140" height="145" fill="url(#fillColor)" opacity="0.85"/>
+          <!-- Pickle pieces -->
+          <ellipse cx="90" cy="145" rx="18" ry="10" fill="#8B2200" opacity="0.8" transform="rotate(-15 90 145)"/>
+          <ellipse cx="150" cy="160" rx="14" ry="8" fill="#6B1A00" opacity="0.8" transform="rotate(20 150 160)"/>
+          <ellipse cx="110" cy="185" rx="20" ry="9" fill="#A0230A" opacity="0.8" transform="rotate(-8 110 185)"/>
+          <ellipse cx="75" cy="200" rx="12" ry="7" fill="#7a1800" opacity="0.8" transform="rotate(12 75 200)"/>
+          <ellipse cx="165" cy="195" rx="15" ry="8" fill="#8B2200" opacity="0.8" transform="rotate(-18 165 195)"/>
+          <ellipse cx="130" cy="215" rx="18" ry="7" fill="#A52A2A" opacity="0.7" transform="rotate(5 130 215)"/>
+          <!-- Small seeds/spices -->
+          <circle cx="100" cy="155" r="3" fill="#4a0f00" opacity="0.7"/>
+          <circle cx="140" cy="175" r="2.5" fill="#3d0c00" opacity="0.7"/>
+          <circle cx="85" cy="220" r="2" fill="#4a0f00" opacity="0.7"/>
+          <circle cx="160" cy="210" r="3" fill="#3d0c00" opacity="0.7"/>
+          <!-- Oil sheen on top -->
+          <ellipse cx="120" cy="118" rx="58" ry="12" fill="#D4A050" opacity="0.4"/>
+          <ellipse cx="100" cy="116" rx="15" ry="4" fill="#FFD700" opacity="0.3"/>
+        </g>
+
+        <!-- Glass shine overlay -->
+        <path d="M68,80 Q60,85 58,100 L50,220 Q48,240 60,250 L180,250 Q192,240 190,220 L182,100 Q180,85 172,80 Z" fill="url(#glassShine)" />
+
+        <!-- Label -->
+        <rect x="62" y="118" width="116" height="90" rx="8" fill="url(#labelGrad)" opacity="0.95"/>
+        <rect x="64" y="120" width="112" height="86" rx="6" fill="none" stroke="#CC6600" stroke-width="1.5"/>
+        <!-- Label text -->
+        <text x="120" y="144" text-anchor="middle" font-family="'Hind Siliguri', sans-serif" font-size="11" font-weight="700" fill="#7B1F00">সাহারা</text>
+        <text x="120" y="157" text-anchor="middle" font-family="'Hind Siliguri', sans-serif" font-size="8" fill="#B35900" letter-spacing="1">SAHARA</text>
+        <!-- Small divider on label -->
+        <line x1="75" y1="162" x2="165" y2="162" stroke="#CC6600" stroke-width="0.8" opacity="0.6"/>
+        <!-- Boroi illustration on label -->
+        <circle cx="96" cy="178" r="8" fill="#6DBE45"/>
+        <circle cx="110" cy="175" r="8" fill="#5CAF35"/>
+        <circle cx="124" cy="178" r="8" fill="#6DBE45"/>
+        <circle cx="138" cy="175" r="8" fill="#52A52F"/>
+        <circle cx="152" cy="178" r="7" fill="#6DBE45"/>
+        <!-- Fruit dots -->
+        <circle cx="96" cy="178" r="2" fill="#4A8A2A"/>
+        <circle cx="110" cy="175" r="2" fill="#3D7A1F"/>
+        <circle cx="124" cy="178" r="2" fill="#4A8A2A"/>
+        <circle cx="138" cy="175" r="2" fill="#3D7A1F"/>
+        <line x1="80" y1="193" x2="160" y2="193" stroke="#CC6600" stroke-width="0.8" opacity="0.6"/>
+        <text x="120" y="204" text-anchor="middle" font-family="'Hind Siliguri', sans-serif" font-size="7.5" fill="#7B1F00">মিক্সড ফ্রুট আঁচার</text>
+
+        <!-- Lid -->
+        <rect x="74" y="30" width="92" height="16" rx="5" fill="url(#lidGrad)" filter="url(#glow)"/>
+        <rect x="76" y="31" width="88" height="5" rx="3" fill="rgba(255,255,255,0.25)"/>
+        <!-- Lid ring -->
+        <path d="M80,42 L160,42" stroke="#CC6600" stroke-width="1" opacity="0.6"/>
+
+        <!-- Glass reflection lines -->
+        <path d="M72,90 Q68,130 65,180" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M80,88 Q77,110 75,140" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Tagline -->
+    <div class="tagline">
+      প্রতিটি কামড়ে<br><span>অসাধারণ স্বাদ!</span>
+    </div>
+
+    <!-- Feature pills -->
+    <div class="features">
+      <div class="pill">🌿 ১০০% প্রাকৃতিক</div>
+      <div class="pill">🔥 ঝাল-মিষ্টি মিশ্রণ</div>
+      <div class="pill">✨ কোনো প্রিজার্ভেটিভ নেই</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="desc">
+      বড়ই, আম, তেঁতুল ও মশলার এক অনন্য মিশ্রণে তৈরি<br>
+      সাহারার বিশেষ রেসিপি — মুখে জল আনার গ্যারান্টি!
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-wrap">
+      <div class="cta">এখনই কিনুন 🛒</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">sahara foods &bull; বিশ্বস্ততার স্বাদ</div>
+</div>
+
+<script>
+  // Animate jar floating
+  const jar = document.querySelector('.jar-wrap');
+  let t = 0;
+  function floatJar() {
+    t += 0.02;
+    const y = Math.sin(t) * 7;
+    const r = Math.sin(t * 0.7) * 2;
+    jar.style.transform = `translateY(${y}px) rotate(${r}deg)`;
+    requestAnimationFrame(floatJar);
+  }
+  setTimeout(floatJar, 1900);
+
+  // CTA hover effect
+  const cta = document.querySelector('.cta');
+  cta.addEventListener('mouseenter', () => {
+    cta.style.transform = 'scale(1.07)';
+    cta.style.transition = 'transform 0.2s ease';
+  });
+  cta.addEventListener('mouseleave', () => {
+    cta.style.transform = 'scale(1)';
+  });
+</script>
+</body>
+</html>
